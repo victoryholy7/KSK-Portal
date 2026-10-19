@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="th"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#152b38">
+  <title>Portal ระบบดิจิทัล | โรงพยาบาลเขาสุกิม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  
+<style>
+*{box-sizing:border-box}
+:root{--ink:#f8fbff;--muted:#dce9f6}
+body{margin:0;min-height:100vh;font-family:"Prompt",Tahoma,sans-serif;color:var(--ink);
+background:radial-gradient(ellipse at 15% 10%,#243f76 0,transparent 38%),radial-gradient(ellipse at 90% 25%,#145d66 0,transparent 34%),linear-gradient(135deg,#101a35,#142c42 55%,#19264b)}
+header{border-bottom:1px solid #ffffff20;background:linear-gradient(110deg,#324e9bdf,#168b91c9);backdrop-filter:blur(10px)}
+.wrap{width:min(1240px,100%);margin:auto;padding:0 24px}
+.hero{padding:48px 0 44px}
+.tag{display:inline-block;border:1px solid #ffffff70;border-radius:99px;padding:6px 13px;color:#e0fff7;font-size:12px;font-weight:700;letter-spacing:.12em}
+h1{font-size:clamp(30px,4vw,42px);margin:16px 0 8px;line-height:1.25}
+.hero p{margin:0;color:#e3f6ff;font-size:17px;line-height:1.7}
+main{padding-top:36px;padding-bottom:54px}
+section+section{margin-top:42px}
+h2{font-size:clamp(20px,2.5vw,25px);margin:0 0 20px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.portal-card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-width:0;min-height:252px;padding:22px;border:1px solid #ffffff55;border-radius:25px;box-shadow:0 14px 30px #050b1f55;transition:transform .22s ease,box-shadow .22s ease}
+.portal-card:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-60px;top:-70px;background:#ffffff1b;pointer-events:none}
+.portal-card:hover{transform:translateY(-6px);box-shadow:0 22px 38px #030a1a70}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:22px;position:relative}
+.emoji{width:50px;height:50px;flex-shrink:0;display:grid;place-items:center;border-radius:17px;background:#ffffff30;border:1px solid #ffffff55;font-size:27px;box-shadow:inset 0 1px #ffffff25}
+.number{white-space:nowrap;border-radius:99px;padding:6px 10px;background:#ffffffdf;color:#24304d;font-size:11px;font-weight:700}
+h3{position:relative;flex:1;font-size:20px;line-height:1.5;margin:0 0 22px;overflow-wrap:anywhere}
+.portal-link{position:relative;display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:13px;padding:10px 14px;text-decoration:none;background:#fff;color:#24304d;font-size:15px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.portal-link:hover{transform:translateY(-2px);box-shadow:0 7px 16px #06102b40}
+.portal-link:focus-visible{outline:3px solid #ffe28a;outline-offset:4px}
+.c1{background:linear-gradient(135deg,#00b4d8,#4361ee 55%,#6941c6)}
+.c2{background:linear-gradient(135deg,#00b894,#00a8cc 58%,#2764c7)}
+.c3{background:linear-gradient(135deg,#ffd166,#ff8c42 55%,#ed4b78);color:#fff}
+.c4{background:linear-gradient(135deg,#ff4d6d,#c9187a 55%,#7b2cbf)}
+.c5{background:linear-gradient(135deg,#4361ee,#3a0ca3 55%,#7209b7)}
+.c6{background:linear-gradient(135deg,#06d6a0,#00a6a6 55%,#247ba0)}
+.c7{background:linear-gradient(135deg,#f72585,#b5179e 55%,#7209b7)}
+.c8{background:linear-gradient(135deg,#43aa8b,#277da1 55%,#4361ee)}
+footer{border-top:1px solid #ffffff20;background:#0b1428d9}
+.footer-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-top:22px;padding-bottom:22px}
+footer p{margin:0;font-size:13px;color:#c5d5e8}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wrap{padding:0 16px}.hero{padding:35px 0}.grid{grid-template-columns:1fr}.portal-card{min-height:225px}main{padding-top:28px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+   <script>
+    // ใส่ URL ของ Google Apps Script Web App หลัง Deploy ในตัวแปรนี้
+    // หากยังไม่ตั้งค่า หน้า Portal และลิงก์ระบบต่าง ๆ จะยังใช้งานได้ตามปกติ
+    const APPS_SCRIPT_URL = "ใส่_URL_เว็บแอป_Google_Apps_Script_ที่นี่";
+    function connectPortalApi() {
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("ใส่_URL")) return;
+      const callbackName = "portalApiCallback";
+      window[callbackName] = function(data) {
+        if (data && data.ok) console.info("เชื่อมต่อ Google Apps Script สำเร็จ");
+        delete window[callbackName];
+      };
+      const script = document.createElement("script");
+      script.src = APPS_SCRIPT_URL + "?action=ping&callback=" + callbackName;
+      script.onerror = () => console.warn("ยังเชื่อมต่อ Google Apps Script ไม่ได้ แต่ลิงก์ระบบยังใช้งานได้");
+      document.body.appendChild(script);
+    }
+    window.addEventListener("load", connectPortalApi);
+  </script>
+</head>
+ <body>
+  <header>
+   <div class="wrap hero"><span class="tag">DIGITAL PORTAL</span>
+    <h1>โรงพยาบาลเขาสุกิม</h1>
+    <p>ศูนย์รวมระบบดิจิทัลเพื่อการตรวจสอบและบริหารจัดการภายในโรงพยาบาล</p>
+   </div>
+  </header>
+  <main class="wrap">
+   <section aria-labelledby="technical-heading">
+    <h2 id="technical-heading">🔧 ระบบตรวจสอบและอาคารสถานที่ (สำหรับช่าง)</h2>
+    <div class="grid">
+     <article class="portal-card c1">
+      <div class="card-top"><span aria-hidden="true" class="emoji">☀️</span> <span class="number">ระบบที่ 1</span>
+      </div>
+      <h3>ระบบตรวจสอบโซลาร์เซลล์และพลังงานไฟฟ้า</h3><a class="portal-link" href="https://ksk-smartpower.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบตรวจสอบโซลาร์เซลล์และพลังงานไฟฟ้า">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c2">
+      <div class="card-top"><span aria-hidden="true" class="emoji">💧</span> <span class="number">ระบบที่ 2</span>
+      </div>
+      <h3>ระบบสาธารณูปโภค (น้ำ-ไฟ-บำบัด)</h3><a class="portal-link" href="https://ksksmartmonitor.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบสาธารณูปโภค น้ำ ไฟ และบำบัด">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c3">
+      <div class="card-top"><span aria-hidden="true" class="emoji">💡</span> <span class="number">ระบบที่ 3</span>
+      </div>
+      <h3>ระบบเช็คไฟฉุกเฉิน</h3><a class="portal-link" href="https://ksklightcheck.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบเช็คไฟฉุกเฉิน">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c4">
+      <div class="card-top"><span aria-hidden="true" class="emoji">🧯</span> <span class="number">ระบบที่ 4</span>
+      </div>
+      <h3>ระบบตรวจสอบถังดับเพลิง</h3><a class="portal-link" href="https://sites.google.com/view/fire-ksk/home" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบตรวจสอบถังดับเพลิง">เข้าสู่ระบบ ↗</a>
+     </article>
+    </div>
+   </section>
+   <section aria-labelledby="management-heading" class="mt-12">
+    <h2 id="management-heading">📋 ระบบบริหารจัดการและบริการทั่วไป</h2>
+    <div class="grid">
+     <article class="portal-card c5">
+      <div class="card-top"><span aria-hidden="true" class="emoji">🚐</span> <span class="number">ระบบที่ 5</span>
+      </div>
+      <h3>ระบบบริหารจัดการยานพาหนะโรงพยาบาลเขาสุกิม</h3><a class="portal-link" href="https://ksksmartdrive.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบบริหารจัดการยานพาหนะโรงพยาบาลเขาสุกิม">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c6">
+      <div class="card-top"><span aria-hidden="true" class="emoji">📦</span> <span class="number">ระบบที่ 6</span>
+      </div>
+      <h3>ระบบทะเบียนคุมวัสดุ</h3><a class="portal-link" href="https://ksk-smartstore.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบทะเบียนคุมวัสดุ">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c7">
+      <div class="card-top"><span aria-hidden="true" class="emoji">😊</span> <span class="number">ระบบที่ 7</span>
+      </div>
+      <h3>แบบประเมินความสุขบุคลากร</h3><a class="portal-link" href="https://ksk-happinometer.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่แบบประเมินความสุขบุคลากร">เข้าสู่ระบบ ↗</a>
+     </article>
+     <article class="portal-card c8">
+      <div class="card-top"><span aria-hidden="true" class="emoji">🏠</span> <span class="number">ระบบที่ 8</span>
+      </div>
+      <h3>ระบบจัดการค่าส่วนกลางบ้านพัก รพ.เขาสุกิม</h3><a class="portal-link" href="https://ksk-smarthomecash.pages.dev/" target="_blank" rel="noopener noreferrer" aria-label="เข้าสู่ระบบจัดการค่าส่วนกลางบ้านพักโรงพยาบาลเขาสุกิม">เข้าสู่ระบบ ↗</a>
+     </article>
+    </div>
+   </section>
+  </main>
+  <footer>
+   <div class="wrap footer-inner">
+    <p>โรงพยาบาลเขาสุกิม</p>
+    <p>ศูนย์รวมระบบดิจิทัลภายในองค์กร</p>
+   </div>
+  </footer>
+ 
+</body></html>
